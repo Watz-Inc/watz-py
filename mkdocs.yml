@@ -1,4 +1,4 @@
-site_name: "Watz Python"
+site_name: "Watz Python SDK"
 site_url: "https://watz-inc.github.io/watz-py/" # Trailing slash is recommended
 repo_url: "https://github.com/watz-inc/watz-py"
 
@@ -43,10 +43,10 @@ extra:
 
 nav:
   - Home:
-    - index.md
+      - index.md
   - API:
-    - reference.md
+      - reference.md
   - Contributing:
-    - CONTRIBUTING.md
-    - CODE_OF_CONDUCT.md    
+      - CONTRIBUTING.md
+      - CODE_OF_CONDUCT.md
   - LICENSE.md
