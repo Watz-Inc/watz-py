@@ -37,6 +37,12 @@ jobs:
           python-version: "3.12"
           cache: true
 
+      # Docs needs credentials to check contributors
+      - name: Set git credentials
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
       - name: Install Nox
         run: |
           pdm sync -d -G nox
