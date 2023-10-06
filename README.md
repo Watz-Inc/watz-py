@@ -1,4 +1,4 @@
-# Watz Python
+# Watz Python SDK
 
 [![PyPI](https://img.shields.io/pypi/v/watz.svg)][pypi status]
 [![Status](https://img.shields.io/pypi/status/watz.svg)][pypi status]
@@ -22,7 +22,7 @@ Python SDK for Watz APIs
 
 ## Installation
 
-You can install _Watz Python_ via [pip](https://pip.pypa.io/) from [PyPI](https://pypi.org/):
+You can install `watz` via [pip](https://pip.pypa.io/) from [PyPI](https://pypi.org/):
 
 ```console
 $ pip install watz
@@ -39,8 +39,8 @@ To learn more, see the [Contributor Guide](CONTRIBUTING.md).
 
 ## License
 
-Distributed under the terms of the [Apache 2.0 license](LICENSE.md),
-_Watz Python_ is free and open source software.
+Distributed under the terms of the [Apache 2.0 license](LICENSE.md), the
+_Watz Python SDK_ is free and open source software.
 
 ## Issues
 
