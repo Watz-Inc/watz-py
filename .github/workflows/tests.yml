@@ -1,0 +1,99 @@
+name: Tests
+
+# Run when a new PR is created for main branch:
+on:
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: "3.12"
+          cache: true
+
+      - name: Install Nox
+        run: |
+          pdm sync -d -G nox
+
+      - name: Run QA
+        run: |
+          pdm run -v nox --session=qa
+
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Ubuntu test on all versions:
+          - { python: "3.9", os: "ubuntu-latest" }
+          - { python: "3.10", os: "ubuntu-latest" }
+          - { python: "3.11", os: "ubuntu-latest" }
+          - { python: "3.12", os: "ubuntu-latest" }
+
+          # Make sure other os types work on newest version:
+          # - { python: "3.12", os: "macOS-latest" } # Mac uses 10x minutes, skipping for now considering v similar to linux
+          - { python: "3.12", os: "windows-latest" } # 2x minutes and the most different, acceptable
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: ${{ matrix.python }}
+          cache: true
+
+      - name: Install Nox
+        run: |
+          pdm sync -d -G nox
+
+      - name: Run Tests
+        run: |
+          pdm run -v nox --session=test
+
+      - name: Upload coverage data
+        uses: "actions/upload-artifact@v3"
+        with:
+          name: coverage-data
+          path: ".coverage.*"
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: "3.12"
+          cache: true
+
+      - name: Install Nox
+        run: |
+          pdm sync -d -G nox
+
+      - name: Download coverage data
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-data
+
+      - name: Combine coverage data and display human readable report
+        run: |
+          pdm run -v nox --session=coverage
+
+      - name: Create coverage report
+        run: |
+          pdm run -v nox --session=coverage -- xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

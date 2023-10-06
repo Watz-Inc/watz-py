@@ -1,0 +1,73 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "window.zoomLevel": -1,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    "[toml]": {
+      "editor.formatOnSave": true,
+      // Format toml files (needs toml extension https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml)
+      "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "[python]": {
+      "editor.formatOnSave": true,
+      "editor.formatOnPaste": false,
+      "editor.codeActionsOnSave": {
+        // Ruff will auto fix issues and sort imports (needs extension https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+        "source.fixAll": true,
+        "source.organizeImports": true
+      },
+      // Black formatting on save (needs black extension https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter)
+      "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "mypy.enabled": false, // Mypy extension might be installed, don't want to use
+    // This enables pyright type checking:
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic",
+
+    "yaml.schemas": {
+      // Mkdocs support https://squidfunk.github.io/mkdocs-material/creating-your-site/#minimal-configuration
+      "https://squidfunk.github.io/mkdocs-material/schema.json": "mkdocs.yml"
+    },
+    "yaml.customTags": [
+      // Mkdocs support https://squidfunk.github.io/mkdocs-material/creating-your-site/#minimal-configuration
+      "!ENV scalar",
+      "!ENV sequence",
+      "tag:yaml.org,2002:python/name:material.extensions.emoji.to_svg",
+      "tag:yaml.org,2002:python/name:material.extensions.emoji.twemoji",
+      "tag:yaml.org,2002:python/name:pymdownx.superfences.fence_code_format"
+    ],
+
+    "search.useIgnoreFiles": false, // Otherwise, things in .gitignore will not be searchable, its better to exclude them manually:
+    "notebook.output.textLineLimit": 100,
+    "debug.allowBreakpointsEverywhere": true,
+    "files.exclude": {
+      "**/.venv/**": true,
+      "**/venv/**": true,
+      "**/coverage": true,
+      "**/htmlcov": true,
+      "**/__pycache__": true,
+      "**/.vscode/**": true,
+      "**/.mypy_cache/**": true,
+      "**/.git/**": true,
+      "**/ipynb_checkpoints/**": true,
+      "**/.ipynb": true
+    },
+    "files.watcherExclude": {
+      "**/.venv/**": true,
+      "**/venv/**": true,
+      "**/coverage": true,
+      "**/htmlcov": true,
+      "**/__pycache__": true,
+      "**/.vscode/**": true,
+      "**/.mypy_cache/**": true,
+      "**/.git/**": true,
+      "**/ipynb_checkpoints/**": true,
+      "**/.ipynb": true
+    }
+  }
+}

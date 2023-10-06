@@ -1,0 +1,127 @@
+name: Release
+
+# Run when the main branch is updated: (i.e. PR merged)
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      # write permission is required to create a github release
+      contents: write
+      # write permission is required for autolabeler
+      # otherwise, read permission is required at least
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Required for https://github.com/salsify/action-detect-and-tag-new-version
+          fetch-depth: 2
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: "3.12"
+          cache: true
+
+      - name: Check if there is a parent commit
+        id: check-parent-commit
+        run: |
+          echo "::set-output name=sha::$(git rev-parse --verify --quiet HEAD^)"
+
+      - name: Detect and tag new version
+        id: check-version
+        if: steps.check-parent-commit.outputs.sha
+        uses: salsify/action-detect-and-tag-new-version@v2.0.1
+        with:
+          version-command: |
+            pdm show --version
+
+      - name: Bump version for developmental release
+        if: "! steps.check-version.outputs.tag"
+        run: |
+          pdm self add pdm-bump==0.7.3 && 
+          pdm bump micro &&
+          version=$(pdm show --version) &&
+          pdm bump to "$version.dev.$(date +%s)"
+
+      - name: (NEW TAG/version/bump) Publish package on PyPI
+        if: steps.check-version.outputs.tag
+        env:
+          PDM_PUBLISH_USERNAME: "__token__"
+          PDM_PUBLISH_PASSWORD: "${{ secrets.PYPI_TOKEN }}"
+        run: |
+          pdm publish --repository pypi
+
+      - name: (NO TAG/no version bump) Publish package on TestPyPI
+        if: "! steps.check-version.outputs.tag"
+        env:
+          PDM_PUBLISH_USERNAME: "__token__"
+          PDM_PUBLISH_PASSWORD: "${{ secrets.TEST_PYPI_TOKEN }}"
+        run: |
+          pdm publish --repository testpypi
+
+      - name: Publish the release notes
+        uses: release-drafter/release-drafter@v5.23.0
+        with:
+          publish: "${{ steps.check-version.outputs.tag != '' }}"
+          tag: "${{ steps.check-version.outputs.tag }}"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  docs:
+    name: Publish Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout docs branch
+        uses: actions/checkout@v4
+        with:
+          ref: docs-site
+
+      - name: checkout current branch
+        uses: actions/checkout@v4
+        with:
+          # Required for https://github.com/salsify/action-detect-and-tag-new-version
+          fetch-depth: 2
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: "3.12"
+          cache: true
+
+      - name: Install Docs Deps
+        run: |
+          pdm sync -dG docs
+
+      - name: Set git credentials
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Check if there is a parent commit
+        id: check-parent-commit
+        run: |
+          echo "::set-output name=sha::$(git rev-parse --verify --quiet HEAD^)"
+
+      - name: Detect new version
+        id: check-version
+        if: steps.check-parent-commit.outputs.sha
+        uses: salsify/action-detect-and-tag-new-version@v2.0.1
+        with:
+          create-tag: false # The release job will create the tag as it runs the same command
+          version-command: |
+            pdm show --version
+
+      - name: Deploy to develop version always
+        run: pdm run mike deploy --push -b docs-site develop
+
+      - name: (version HAS changed) Deploy doc version and set to latest
+        if: steps.check-version.outputs.current-version
+        run: | # Only pushing on the second command to avoid pushing twice
+          pdm run mike deploy -b docs-site --update-aliases ${{ steps.check-version.outputs.current-version }} latest &&
+          pdm run mike set-default ${{ steps.check-version.outputs.current-version }} --push -b docs-site
