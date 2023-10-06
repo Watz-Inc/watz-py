@@ -38,7 +38,7 @@ You need Python 3.9+ and [PDM](https://pdm.fming.dev/) installed.
 
 Install the package with development requirements:
 `pdm install` to setup for the first time
-`pdm venv activate` to activate the virtual environment (whenever you open the project)
+`pdm venv activate` to activate the virtual environment (whenever you open the project to work)
 
 ### Running tests
 
