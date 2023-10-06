@@ -37,10 +37,8 @@ Request features on the [Issue Tracker](https://github.com/watz-inc/watz-py/issu
 You need Python 3.9+ and [PDM](https://pdm.fming.dev/) installed.
 
 Install the package with development requirements:
-
-```console
-$ pdm install
-```
+`pdm install` to setup for the first time
+`pdm venv activate` to activate the virtual environment (whenever you open the project)
 
 ### Running tests
 
