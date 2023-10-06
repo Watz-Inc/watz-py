@@ -117,9 +117,9 @@ source = [
     'watz/',
     # This handles the fact that mac/windows/ubuntu github action runners all have different paths
     # This tells coverage to treat the paths as identical and not error:
-    '/Users/runner/work/watz/watz/watz/',
-    '/home/runner/work/watz/watz/watz/',
-    'D:\a\watz\watz\watz',
+    '/Users/runner/work/watz-py/watz-py/watz/',
+    '/home/runner/work/watz-py/watz-py/watz/',
+    'D:\a\watz-py\watz-py\watz',
 ]
 
 [tool.coverage.run]
