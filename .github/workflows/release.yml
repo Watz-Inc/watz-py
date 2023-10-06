@@ -121,7 +121,7 @@ jobs:
         run: pdm run mike deploy --push -b docs-site develop
 
       - name: (version HAS changed) Deploy doc version and set to latest
-        if: steps.check-version.outputs.current-version
+        if: steps.check-version.outputs.previous-version != steps.check-version.outputs.current-version
         run: | # Only pushing on the second command to avoid pushing twice
           pdm run mike deploy -b docs-site --update-aliases ${{ steps.check-version.outputs.current-version }} latest &&
           pdm run mike set-default ${{ steps.check-version.outputs.current-version }} --push -b docs-site

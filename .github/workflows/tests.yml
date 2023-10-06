@@ -26,6 +26,25 @@ jobs:
         run: |
           pdm run -v nox --session=qa
 
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: "3.12"
+          cache: true
+
+      - name: Install Nox
+        run: |
+          pdm sync -d -G nox
+
+      - name: Build docs
+        run: |
+          pdm run -v nox --session=docs
+
   tests:
     runs-on: ${{ matrix.os }}
     strategy:

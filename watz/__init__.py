@@ -1,4 +1,4 @@
-"""Watz Python."""
+"""The Watz Python SDK."""
 
 from importlib.metadata import version
 
