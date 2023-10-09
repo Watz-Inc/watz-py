@@ -18,8 +18,7 @@
       "editor.formatOnPaste": false,
       "editor.codeActionsOnSave": {
         // Ruff will auto fix issues and sort imports (needs extension https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
-        "source.fixAll": true,
-        "source.organizeImports": true
+        "source.fixAll": true
       },
       // Black formatting on save (needs black extension https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter)
       "editor.defaultFormatter": "ms-python.black-formatter"

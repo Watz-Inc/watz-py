@@ -4,6 +4,7 @@ from importlib.metadata import version
 
 __version__ = version("watz")
 
-from ._utils import add
+from . import endpoints
+from .client import Client
 
-__all__ = ["add"]
+__all__ = ["endpoints", "Client"]
