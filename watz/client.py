@@ -73,7 +73,7 @@ class Client(ClientBase):
         """Retrieves the trace metadata for the requested nodes.
 
         Args:
-            nids (tp.Iterable[str]): The node ids to retrieve trace metadata for.
+            nids (list[str]): The node ids to retrieve trace metadata for.
 
         Returns:
             RespTraceList
@@ -89,7 +89,7 @@ class Client(ClientBase):
         """Retrieves the trace data for the request traces.
 
         Args:
-            traces (tp.Mapping[str, tp.Iterable[str]]): A dict of node ids to a list of trace identifiers for each respective node.
+            traces (dict[str, list[str]]): A dict of node ids to a list of trace identifiers for each respective node.
 
         Returns:
             RespTraceData
@@ -109,7 +109,7 @@ class Client(ClientBase):
         """Creates new nodes.
 
         Args:
-            nodes (tp.Iterable[tp.Union[CreateActivityNode, CreateUserNode]]): The nodes to create.
+            nodes (list[tp.Union[CreateActivityNode, CreateUserNode]]): The nodes to create.
 
         Returns:
             RespCreateNodes
@@ -127,7 +127,7 @@ class Client(ClientBase):
         """Creates new traces.
 
         Args:
-            traces (tp.Mapping[str, tp.Iterable[CreateTrace]]): A dict of node ids to a list of traces to create for each respective node.
+            traces (dict[str, tp.Iterable[CreateTrace]]): A dict of node ids to a list of traces to create for each respective node.
 
         Returns:
             RespCreateTraces

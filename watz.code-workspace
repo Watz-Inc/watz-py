@@ -47,6 +47,7 @@
     "files.exclude": {
       "**/.venv/**": true,
       "**/venv/**": true,
+      "**/.nox/**": true,
       "**/coverage": true,
       "**/htmlcov": true,
       "**/__pycache__": true,
@@ -59,6 +60,7 @@
     "files.watcherExclude": {
       "**/.venv/**": true,
       "**/venv/**": true,
+      "**/.nox/**": true,
       "**/coverage": true,
       "**/htmlcov": true,
       "**/__pycache__": true,
