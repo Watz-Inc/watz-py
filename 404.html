@@ -20,7 +20,7 @@
 
       // Is a version if defaultVersion or starts with a number:
       if (part === defaultVersion || (part && !isNaN(part[0]))) {
-        window.location.href = `${basePath}/${part}/${targetRedirectPath}`;
+        window.location.href = `/${basePath}/${part}/${targetRedirectPath}`;
         redirected = true;
       }
     }
@@ -28,6 +28,6 @@
 
   if (!redirected) {
     // If no version was found, redirect to default version's 404:
-    window.location.href = `${basePath}/${defaultVersion}/${targetRedirectPath}`;
+    window.location.href = `/${basePath}/${defaultVersion}/${targetRedirectPath}`;
   }
 </script>
