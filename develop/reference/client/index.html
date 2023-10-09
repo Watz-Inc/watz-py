@@ -88,6 +88,18 @@
     
       <div data-md-color-scheme="default" data-md-component="outdated" hidden>
         
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+               You're not viewing the latest
+version.
+<a href="../../..">
+  <strong>Click here to go to latest.</strong>
+</a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),outdated=__md_get("__outdated",sessionStorage);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
       </div>
     
     
@@ -1196,7 +1208,7 @@
         <tr>
           <td><code>nodes</code></td>
           <td>
-                <code><span title="typing_extensions.Iterable">Iterable</span>[<span title="typing_extensions.Union">Union</span>[<a class="autorefs autorefs-internal" title="watz.endpoints.post_create_nodes.CreateActivityNode" href="../endpoints/post_create_nodes/#watz.endpoints.post_create_nodes.CreateActivityNode">CreateActivityNode</a>, <a class="autorefs autorefs-internal" title="watz.endpoints.post_create_nodes.CreateUserNode" href="../endpoints/post_create_nodes/#watz.endpoints.post_create_nodes.CreateUserNode">CreateUserNode</a>]]</code>
+                <code>list[<span title="typing_extensions.Union">Union</span>[<a class="autorefs autorefs-internal" title="watz.endpoints.post_create_nodes.CreateActivityNode" href="../endpoints/post_create_nodes/#watz.endpoints.post_create_nodes.CreateActivityNode">CreateActivityNode</a>, <a class="autorefs autorefs-internal" title="watz.endpoints.post_create_nodes.CreateUserNode" href="../endpoints/post_create_nodes/#watz.endpoints.post_create_nodes.CreateUserNode">CreateUserNode</a>]]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1260,7 +1272,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates new nodes.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        nodes (tp.Iterable[tp.Union[CreateActivityNode, CreateUserNode]]): The nodes to create.</span>
+<span class="sd">        nodes (list[tp.Union[CreateActivityNode, CreateUserNode]]): The nodes to create.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        RespCreateNodes</span>
@@ -1311,7 +1323,7 @@
         <tr>
           <td><code>traces</code></td>
           <td>
-                <code><span title="typing_extensions.Mapping">Mapping</span>[str, <span title="typing_extensions.Iterable">Iterable</span>[<a class="autorefs autorefs-internal" title="watz.endpoints.post_create_traces.CreateTrace" href="../endpoints/post_create_traces/#watz.endpoints.post_create_traces.CreateTrace">CreateTrace</a>]]</code>
+                <code>dict[str, <span title="typing_extensions.Iterable">Iterable</span>[<a class="autorefs autorefs-internal" title="watz.endpoints.post_create_traces.CreateTrace" href="../endpoints/post_create_traces/#watz.endpoints.post_create_traces.CreateTrace">CreateTrace</a>]]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1371,7 +1383,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates new traces.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        traces (tp.Mapping[str, tp.Iterable[CreateTrace]]): A dict of node ids to a list of traces to create for each respective node.</span>
+<span class="sd">        traces (dict[str, tp.Iterable[CreateTrace]]): A dict of node ids to a list of traces to create for each respective node.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        RespCreateTraces</span>
@@ -1580,7 +1592,7 @@
         <tr>
           <td><code>traces</code></td>
           <td>
-                <code><span title="typing_extensions.Mapping">Mapping</span>[str, <span title="typing_extensions.Iterable">Iterable</span>[str]]</code>
+                <code>dict[str, list[str]]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1640,7 +1652,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieves the trace data for the request traces.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        traces (tp.Mapping[str, tp.Iterable[str]]): A dict of node ids to a list of trace identifiers for each respective node.</span>
+<span class="sd">        traces (dict[str, list[str]]): A dict of node ids to a list of trace identifiers for each respective node.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        RespTraceData</span>
@@ -1691,7 +1703,7 @@
         <tr>
           <td><code>nids</code></td>
           <td>
-                <code><span title="typing_extensions.Iterable">Iterable</span>[str]</code>
+                <code>list[str]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1749,7 +1761,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieves the trace metadata for the requested nodes.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        nids (tp.Iterable[str]): The node ids to retrieve trace metadata for.</span>
+<span class="sd">        nids (list[str]): The node ids to retrieve trace metadata for.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        RespTraceList</span>
