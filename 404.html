@@ -1,33 +1,12 @@
 <!-- This gets added in the workflow directly to the docs-site branch where its needed -->
+<!-- This currently always redirects to the latest version which isn't ideal, but should be sorted eventually as the issue is recent -->
+<!-- (the solution in the issue hardcodes the versions which isn't worth it) -->
 <!-- https://github.com/jimporter/mike/issues/72 -->
 
 <script>
-  // Check if the current path is versioned, if not, redirect to the default versioned path
   const defaultVersion = "latest";
   const basePath = "watz-py";
   const targetRedirectPath = "404"; // path to redirect to, relative to basePath
 
-  const activePathParts = window.location.pathname.split("/");
-  let directlyAfterBase = false;
-  let redirected = false;
-  activePathParts.forEach((part, index) => {
-    if (part === basePath) {
-      // If a version or latest is being used, it will be the next part:
-      directlyAfterBase = true;
-    } else if (directlyAfterBase) {
-      // Check whether its using latest/version:
-      directlyAfterBase = false;
-
-      // Is a version if defaultVersion or starts with a number:
-      if (part === defaultVersion || (part && !isNaN(part[0]))) {
-        window.location.href = `/${basePath}/${part}/${targetRedirectPath}`;
-        redirected = true;
-      }
-    }
-  });
-
-  if (!redirected) {
-    // If no version was found, redirect to default version's 404:
-    window.location.href = `/${basePath}/${defaultVersion}/${targetRedirectPath}`;
-  }
+  window.location.href = `/${basePath}/${defaultVersion}/${targetRedirectPath}`;
 </script>
