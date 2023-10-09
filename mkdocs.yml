@@ -12,7 +12,6 @@ theme:
     - navigation.instant.progress
     - navigation.tracking
     - navigation.tabs
-    - navigation.indexes
     - search.suggest
     - search.highlight
 
@@ -32,7 +31,21 @@ plugins:
       repository: watz-inc/watz-py
       branch: main
   - search
-  - mkdocstrings
+
+  # https://mkdocstrings.github.io/recipes/?h=recip#automatic-code-reference-pages
+  - gen-files:
+      scripts:
+        - docs/gen_ref_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index
+
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            merge_init_into_class: true
+            inherited_members: true
 
 markdown_extensions:
   - pymdownx.snippets
@@ -44,8 +57,8 @@ extra:
 nav:
   - Home:
       - index.md
-  - API:
-      - reference.md
+  # defer to gen-files + literate-nav https://mkdocstrings.github.io/recipes/?h=recip#automatic-code-reference-pages
+  - Code Reference: reference/ # Note the trailing slash is important
   - Contributing:
       - CONTRIBUTING.md
       - CODE_OF_CONDUCT.md

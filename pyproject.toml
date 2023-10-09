@@ -7,10 +7,12 @@ build-backend = 'hatchling.build'
 # see https://github.com/pydantic/pydantic/pull/4542
 include = ['/README.md', '/watz', '/tests', '/requirements.txt']
 
+
 [tool.pdm]
 [tool.pdm.dev-dependencies]
 nox = ["nox>=2023.4.22"]
-test = ["pytest>=7.4.2"]
+
+test = ["pytest>=7.4.2", "pytest-httpx>=0.26.0", "polyfactory>=2.9.0"]
 coverage = ["coverage[toml]>=7.3.2"]
 qa = [
     "bandit>=1.7.5",
@@ -28,9 +30,13 @@ docs = [
     "mkdocs-git-revision-date-localized-plugin>=1.2.0",
     "mkdocs-git-committers-plugin-2>=1.2.0",
     "pymdown-extensions>=10.3",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-literate-nav>=0.6.1",
+    "mkdocs-section-index>=0.3.8",
     # Weirdly Mike fails without this being explicitly available (don't think nox is installing it)
     "setuptools>=61.0",
 ]
+dev = ["ipykernel>=6.25.2"]
 
 [project]
 name = "watz"
@@ -52,7 +58,11 @@ classifiers = [
     'License :: OSI Approved',
 ]
 
-dependencies = []
+dependencies = [
+    "httpx>=0.25.0,<1.0.0",
+    "pydantic>=2.4.2,<3.0.0",
+    "anyio<4.0.0,>=3.7.1",
+]
 
 
 [project.urls]
@@ -68,7 +78,9 @@ line-length = 100
 line-length = 100
 ignore-init-module-imports = true # Makes unused imports in __init__.py give message to add to __all__ rather than redundant import
 unfixable = [
-    "F401", # Don't automatically remove unused imports, can be quite annoying on save when writing code
+    # Don't remove unused imports or variables on save, can be quite annoying when writing code:
+    "F401",
+    "F841",
 ]
 select = [
     "E",   # pycodestyle
