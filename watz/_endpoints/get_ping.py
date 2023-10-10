@@ -10,7 +10,7 @@ from .resp_base import RespBase
 class ReqPing(BaseModel):
     """`GET`: `/api/v1/ping` request model.
 
-    No parameters.
+    No specific attributes.
     """
 
     pass
@@ -21,13 +21,11 @@ class RespPing(RespBase):
 
     Attributes:
         status: Always `"OK"`.
-        whoami: The user's email address attached to the token.
-        root_nid: The calling user's root node id.
+        whoami: The researcher's email address attached to the token.
     """
 
     status: tp.Literal["OK"]
     whoami: str
-    root_nid: str
 
 
 end_ping = Endpoint("GET", "/ping", ReqPing, RespPing)

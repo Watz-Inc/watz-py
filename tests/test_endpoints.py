@@ -5,12 +5,13 @@ from pydantic import BaseModel
 from pytest_httpx import HTTPXMock
 
 from tests import _utils as ut
-from watz.endpoints.get_node_map import end_node_map
-from watz.endpoints.get_ping import end_ping
-from watz.endpoints.get_trace_data import end_trace_data
-from watz.endpoints.get_trace_list import end_trace_list
-from watz.endpoints.post_create_nodes import CreateActivityNode, CreateUserNode, end_create_nodes
-from watz.endpoints.post_create_traces import CreateTrace, end_create_traces
+from watz._endpoints.get_ping import end_ping
+from watz._endpoints.get_subjects import end_subjects
+from watz._endpoints.get_trace_data import end_trace_data
+from watz._endpoints.get_trace_list import end_trace_list
+from watz._endpoints.post_create_activities import NewActivity, end_create_activities
+from watz._endpoints.post_create_subjects import NewSubject, end_create_subjects
+from watz._endpoints.post_create_traces import NewTrace, end_create_traces
 
 T = tp.TypeVar("T", bound=BaseModel)
 
@@ -18,10 +19,11 @@ T = tp.TypeVar("T", bound=BaseModel)
 def test_endpoints(httpx_mock: HTTPXMock):
     eps = [
         end_ping,
-        end_node_map,
+        end_subjects,
         end_trace_data,
         end_trace_list,
-        end_create_nodes,
+        end_create_subjects,
+        end_create_activities,
         end_create_traces,
     ]
 
@@ -40,24 +42,23 @@ def test_endpoints(httpx_mock: HTTPXMock):
     client = ut.fake_client()
 
     assert isinstance(client.ping(), end_ping.resp_model)
-    assert isinstance(client.node_map(), end_node_map.resp_model)
+    assert isinstance(client.subjects(), end_subjects.resp_model)
     assert isinstance(client.trace_data({"123": ["sd", "df"]}), end_trace_data.resp_model)
     assert isinstance(client.trace_list(["1", "a"]), end_trace_list.resp_model)
     assert isinstance(
-        client.create_nodes(
-            [
-                CreateUserNode(parent_nid=client.root_nid, label="foo@bar.com"),
-                CreateActivityNode(parent_nid=client.root_nid, label="foo"),
-            ]
-        ),
-        end_create_nodes.resp_model,
+        client.create_subjects([NewSubject(uid="foo@foo.com"), NewSubject(uid="bar@bar.com")]),
+        end_create_subjects.resp_model,
+    )
+    assert isinstance(
+        client.create_activities([NewActivity(label="foo"), NewActivity(label="bar")]),
+        end_create_activities.resp_model,
     )
     assert isinstance(
         client.create_traces(
             {
                 "123": [
-                    CreateTrace(
-                        identifier="foo",
+                    NewTrace(
+                        uid="foo",
                         data=[{"x": 1, "y": 2}, 1, 2, 3, True, False],
                     )
                 ]

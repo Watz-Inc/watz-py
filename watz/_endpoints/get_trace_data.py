@@ -13,7 +13,7 @@ class ReqTraceData(BaseModel):
     """`GET`: `/api/v1/trace-data` request model.
 
     Attributes:
-        traces: A dict of node ids to a list of trace identifiers for each respective node.
+        traces: A dict of subject/activity uids to a list of trace uids for each respective subject/activity.
     """
 
     traces: dict[str, list[str]]
@@ -33,7 +33,7 @@ class RespTraceData(RespBase):
     """`GET`: `/api/v1/trace-data` response model.
 
     Attributes:
-        traces: `dict[nid, dict[trace identifier, TraceData | None]]`. The trace will be `None` when the trace does not exist.
+        traces: `dict[subject/act uid, dict[trace uid, TraceData]]`.
     """
 
     traces: dict[str, dict[str, tp.Optional[TraceData]]]

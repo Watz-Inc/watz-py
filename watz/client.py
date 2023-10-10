@@ -1,24 +1,28 @@
 """The central API client."""
 
-from functools import cached_property
 from typing import Optional
 
 import typing_extensions as tp
 
 from ._client_base import ClientBase
-from .endpoints.get_node_map import ReqNodeMap, RespNodeMap, end_node_map
-from .endpoints.get_ping import ReqPing, RespPing, end_ping
-from .endpoints.get_trace_data import ReqTraceData, RespTraceData, end_trace_data
-from .endpoints.get_trace_list import ReqTraceList, RespTraceList, end_trace_list
-from .endpoints.post_create_nodes import (
-    CreateActivityNode,
-    CreateUserNode,
-    ReqCreateNodes,
-    RespCreateNodes,
-    end_create_nodes,
+from ._endpoints.get_ping import ReqPing, RespPing, end_ping
+from ._endpoints.get_subjects import ReqSubjects, RespSubjects, end_subjects
+from ._endpoints.get_trace_data import ReqTraceData, RespTraceData, end_trace_data
+from ._endpoints.get_trace_list import ReqTraceList, RespTraceList, end_trace_list
+from ._endpoints.post_create_activities import (
+    NewActivity,
+    ReqCreateActivities,
+    RespCreateActivities,
+    end_create_activities,
 )
-from .endpoints.post_create_traces import (
-    CreateTrace,
+from ._endpoints.post_create_subjects import (
+    NewSubject,
+    ReqCreateSubjects,
+    RespCreateSubjects,
+    end_create_subjects,
+)
+from ._endpoints.post_create_traces import (
+    NewTrace,
     ReqCreateTraces,
     RespCreateTraces,
     end_create_traces,
@@ -41,39 +45,27 @@ class Client(ClientBase):
         """
         super().__init__(base=base, secret=secret, version=1)
 
-    @cached_property
-    def root_nid(self) -> str:
-        """The root node's id for the calling user. This is retrieved from a `ping()` on creation and cached thereafter.
-
-        Returns:
-            str: The root node's id.
-        """
-        return self.ping().root_nid
-
     def ping(self) -> RespPing:
-        """Ping the API.
+        """Availability check. Pings the API.
 
         Returns:
             RespPing
         """
         return end_ping.call(self._session, ReqPing())
 
-    def node_map(self, root_nid: Optional[tp.Optional[str]] = None) -> RespNodeMap:
-        """Retrieve the structure of nodes accessible to the caller.
-
-        Args:
-            root_nid (tp.Optional[str], optional): The root node's id to build the map from. If `None`, the root node is assumed to be the calling user's root node, stored from a `ping()` on creation.
+    def subjects(self) -> RespSubjects:
+        """Retrieve the caller's subjects.
 
         Returns:
-            RespNodeMap
+            RespSubjects
         """
-        return end_node_map.call(self._session, ReqNodeMap(root_nid=root_nid or self.root_nid))
+        return end_subjects.call(self._session, ReqSubjects())
 
-    def trace_list(self, nids: tp.Iterable[str]) -> RespTraceList:
-        """Retrieves the trace metadata for the requested nodes.
+    def trace_list(self, uids: tp.Iterable[str]) -> RespTraceList:
+        """Retrieves the trace metadata for the requested subjects/activities.
 
         Args:
-            nids (tp.Iterable[str]): The node ids to retrieve trace metadata for.
+            uids (tp.Iterable[str]): The subject/activity uids to retrieve trace metadata for.
 
         Returns:
             RespTraceList
@@ -81,7 +73,7 @@ class Client(ClientBase):
         return end_trace_list.call(
             self._session,
             ReqTraceList(
-                nids=tp.cast(list[str], nids)  # Pydantic can handle the conversion if needed.
+                uids=tp.cast(list[str], uids)  # Pydantic can handle the conversion if needed.
             ),
         )
 
@@ -89,7 +81,7 @@ class Client(ClientBase):
         """Retrieves the trace data for the request traces.
 
         Args:
-            traces (tp.Mapping[str, tp.Iterable[str]]): A dict of node ids to a list of trace identifiers for each respective node.
+            traces (tp.Mapping[str, tp.Iterable[str]]): A dict of subject/activity uids to a list of trace identifiers for each respective subject/activity.
 
         Returns:
             RespTraceData
@@ -103,31 +95,47 @@ class Client(ClientBase):
             ),
         )
 
-    def create_nodes(
-        self, nodes: tp.Iterable[tp.Union[CreateActivityNode, CreateUserNode]]
-    ) -> RespCreateNodes:
-        """Creates new nodes.
+    def create_subjects(self, subjects: tp.Iterable[NewSubject]) -> RespCreateSubjects:
+        """Create new subjects.
 
         Args:
-            nodes (tp.Iterable[tp.Union[CreateActivityNode, CreateUserNode]]): The nodes to create.
+            subjects (tp.Iterable[NewSubject]): The subjects to create.
 
         Returns:
-            RespCreateNodes
+            RespCreateSubjects
         """
-        return end_create_nodes.call(
+        return end_create_subjects.call(
             self._session,
-            ReqCreateNodes(
-                nodes=tp.cast(  # Pydantic can handle the conversion if needed.
-                    list[tp.Union[CreateActivityNode, CreateUserNode]], nodes
+            ReqCreateSubjects(
+                subjects=tp.cast(  # Pydantic can handle the conversion if needed.
+                    list[NewSubject], subjects
                 )
             ),
         )
 
-    def create_traces(self, traces: tp.Mapping[str, tp.Iterable[CreateTrace]]) -> RespCreateTraces:
-        """Creates new traces.
+    def create_activities(self, activities: tp.Iterable[NewActivity]) -> RespCreateActivities:
+        """Create new activities.
 
         Args:
-            traces (tp.Mapping[str, tp.Iterable[CreateTrace]]): A dict of node ids to a list of traces to create for each respective node.
+            activities (tp.Iterable[NewActivity]): The activities to create.
+
+        Returns:
+            RespCreateActivities
+        """
+        return end_create_activities.call(
+            self._session,
+            ReqCreateActivities(
+                activities=tp.cast(  # Pydantic can handle the conversion if needed.
+                    list[NewActivity], activities
+                )
+            ),
+        )
+
+    def create_traces(self, traces: tp.Mapping[str, tp.Iterable[NewTrace]]) -> RespCreateTraces:
+        """Create new traces.
+
+        Args:
+            traces (tp.Mapping[str, tp.Iterable[NewTrace]]): A dict of subject/activity uids to a list of `NewTrace` models to create for each respective subject/activity.
 
         Returns:
             RespCreateTraces
@@ -136,7 +144,7 @@ class Client(ClientBase):
             self._session,
             ReqCreateTraces(
                 traces=tp.cast(  # Pydantic can handle the conversion if needed.
-                    dict[str, list[CreateTrace]], traces
+                    dict[str, list[NewTrace]], traces
                 )
             ),
         )
