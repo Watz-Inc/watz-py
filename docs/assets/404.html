@@ -1,0 +1,12 @@
+<!-- MANUAL: add this directly to the docs-site branch where its needed -->
+<!-- This currently always redirects to the latest version which isn't ideal, but should be sorted eventually as the issue is recent -->
+<!-- (the solution in the issue hardcodes the versions which isn't worth it) -->
+<!-- https://github.com/jimporter/mike/issues/72 -->
+
+<script>
+  const defaultVersion = "latest";
+  const basePath = "watz-py";
+  const targetRedirectPath = "404"; // path to redirect to, relative to basePath
+
+  window.location.href = `/${basePath}/${defaultVersion}/${targetRedirectPath}`;
+</script>
