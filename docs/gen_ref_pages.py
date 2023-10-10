@@ -9,8 +9,8 @@ pkg_name = "watz"
 nav = mkdocs_gen_files.Nav()  # type: ignore
 
 for path in sorted(Path(pkg_name).rglob("*.py")):
-    # Make sure filename doesn't start with an underscore:
-    if path.name.startswith("_"):
+    # Make sure filename or any dir in the path doesn't start with an underscore:
+    if any(part.startswith("_") for part in path.parts):
         continue
 
     module_path = path.relative_to(".").with_suffix("")

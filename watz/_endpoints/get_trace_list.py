@@ -10,21 +10,21 @@ class ReqTraceList(BaseModel):
     """`GET`: `/api/v1/trace-list` request model.
 
     Attributes:
-        nids: The node ids to pull the `TraceMeta` for.
+        uids: The subject/activity uids to pull the `TraceMeta` for.
     """
 
-    nids: list[str]
+    uids: list[str]
 
 
 class TraceMeta(BaseModel):
     """A trace meta object. This is a lightweight object that contains the trace's metadata but excludes the data itself.
 
     Attributes:
-        identifier: The trace's identifier.
+        uid: The trace's unique identifier.
         length: The trace's length.
     """
 
-    identifier: str
+    uid: str
     length: int
 
 
@@ -32,7 +32,7 @@ class RespTraceList(RespBase):
     """`GET`: `/api/v1/trace-list` response model.
 
     Attributes:
-        traces: `dict[nid, dict[trace identifier, TraceMeta]]`.
+        traces: `dict[subject/act uid, dict[trace uid, TraceMeta]]`.
     """
 
     traces: dict[str, dict[str, TraceMeta]]

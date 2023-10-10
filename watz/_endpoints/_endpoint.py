@@ -32,6 +32,7 @@ class Endpoint(tp.Generic[Method_T, Req_T, Resp_T]):
         resp_model: type[Resp_T],
         resp_example: Optional[tp.Optional[tp.Callable[[], Resp_T]]] = None,
     ):
+        path = path.strip()
         self.req_model = req_model
         self.resp_model = resp_model
         self.method = method
@@ -62,7 +63,8 @@ class Endpoint(tp.Generic[Method_T, Req_T, Resp_T]):
     def _parse(self, resp: httpx.Response) -> Resp_T:
         resp.raise_for_status()
         try:
-            return self.resp_model.model_validate_json(resp.text)
+            # Pass the bytes directly into pydantic to try and avoid python decoding:
+            return self.resp_model.model_validate_json(resp.content)
         except ValidationError as e:
             raise ValueError(
                 "Unexpected data structure from Watz API.\n{}".format(resp.json())

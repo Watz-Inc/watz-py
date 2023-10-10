@@ -8,15 +8,15 @@ from ._endpoint import Endpoint
 from .resp_base import RespBase
 
 
-class CreateTrace(BaseModel):
+class NewTrace(BaseModel):
     """A creator model for a trace.
 
     Attributes:
-        identifier: The trace's identifier, this must be unique.
+        uid: The trace's identifier, this must be unique to the subject/activity.
         data: The list of json-compatible data.
     """
 
-    identifier: str
+    uid: str
     data: list[tp.Any]
 
 
@@ -24,10 +24,10 @@ class ReqCreateTraces(BaseModel):
     """`POST`: `/api/v1/traces` request model.
 
     Attributes:
-        traces: A dict of node ids to a list of `CreateTrace` models for each respective node.
+        traces: A dict of activity/subject uids to a list of `NewTrace` models for each respective activity/subject.
     """
 
-    traces: dict[str, list[CreateTrace]]
+    traces: dict[str, list[NewTrace]]
     pass
 
 
