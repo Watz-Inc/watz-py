@@ -2,67 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://watz-inc.github.io/watz-py/develop/</loc>
-         <lastmod>2023-10-09</lastmod>
+         <lastmod>2023-10-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/develop/CODE_OF_CONDUCT/</loc>
-         <lastmod>2023-10-09</lastmod>
+         <lastmod>2023-10-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/develop/CONTRIBUTING/</loc>
-         <lastmod>2023-10-09</lastmod>
+         <lastmod>2023-10-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/develop/LICENSE/</loc>
-         <lastmod>2023-10-09</lastmod>
+         <lastmod>2023-10-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/develop/reference/SUMMARY/</loc>
-         <lastmod>2023-10-09</lastmod>
+         <lastmod>2023-10-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/develop/reference/client/</loc>
-         <lastmod>2023-10-09</lastmod>
+         <lastmod>2023-10-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://watz-inc.github.io/watz-py/develop/reference/endpoints/get_node_map/</loc>
-         <lastmod>2023-10-09</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://watz-inc.github.io/watz-py/develop/reference/endpoints/get_ping/</loc>
-         <lastmod>2023-10-09</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://watz-inc.github.io/watz-py/develop/reference/endpoints/get_trace_data/</loc>
-         <lastmod>2023-10-09</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://watz-inc.github.io/watz-py/develop/reference/endpoints/get_trace_list/</loc>
-         <lastmod>2023-10-09</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://watz-inc.github.io/watz-py/develop/reference/endpoints/post_create_nodes/</loc>
-         <lastmod>2023-10-09</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://watz-inc.github.io/watz-py/develop/reference/endpoints/post_create_traces/</loc>
-         <lastmod>2023-10-09</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://watz-inc.github.io/watz-py/develop/reference/endpoints/resp_base/</loc>
-         <lastmod>2023-10-09</lastmod>
+         <loc>https://watz-inc.github.io/watz-py/develop/reference/models/</loc>
+         <lastmod>2023-10-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
