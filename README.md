@@ -18,7 +18,7 @@
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
-Python SDK for Watz APIs
+The Python SDK for Watz APIs.
 
 ## Installation
 
@@ -30,7 +30,11 @@ $ pip install watz
 
 ## Usage
 
-Please see the [documentation](https://watz-inc.github.io/watz-py) for details.
+Please see the [usage docs](https://watz-inc.github.io/watz-py/usage) for details.
+
+## Getting a key
+
+See the API section on the [Watz website](https://watz.coach/docs/api).
 
 ## Contributing
 

@@ -57,4 +57,23 @@ def docs(session: nox.Session) -> None:
 
     # If serve passed in, also run mike serve:
     if session.posargs and session.posargs[0] == "serve":
-        session.run("mike", "serve", *session.posargs[1:])
+        # When any of these files/folders change, rebuild the docs:
+        watchers = [
+            "./docs",
+            "./watz",
+            "./CODE_OF_CONDUCT.md",
+            "./README.md",
+            "./CONTRIBUTING.md",
+            "./LICENSE.md",
+            "./mkdocs.yml",
+        ]
+        # Despite mike docs saying can't use mkdocs, it seems to work and mike doesn't have hot reload, so using instead:
+        session.run(
+            "mkdocs",
+            "serve",
+            # Use port 8080 as 8000 & 3000 are commonly used by other dev processes
+            "--dev-addr",
+            "localhost:8080",
+            *sum([["-w", path] for path in watchers], []),
+        )
+        # session.run("mike", "serve", *session.posargs[1:])
