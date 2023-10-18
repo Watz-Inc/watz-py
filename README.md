@@ -12,7 +12,7 @@
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)][black]
 
 [pypi status]: https://pypi.org/project/watz/
-[license]: https://watz-inc.github.io/watz-py/license
+[license]: https://watz-inc.github.io/watz-py/latest/license
 [tests]: https://github.com/watz-inc/watz-py/actions?workflow=Tests
 [codecov]: https://app.codecov.io/gh/watz-inc/watz-py
 [pre-commit]: https://github.com/pre-commit/pre-commit
@@ -30,7 +30,7 @@ $ pip install watz
 
 ## Usage
 
-Please see the [usage docs](https://watz-inc.github.io/watz-py/usage) for details.
+Please see the [usage docs](https://watz-inc.github.io/watz-py/latest/usage) for details.
 
 ## Getting a key
 
