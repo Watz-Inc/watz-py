@@ -5,9 +5,14 @@
     }
   ],
   "settings": {
-    "window.zoomLevel": -1,
+    "window.zoomLevel": -2,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "python.defaultInterpreterPath": ".venv/bin/python",
+    "[markdown]": {
+      // Disable markdown formatting because sometimes indents are important in ways the formatter doesn't understand:
+      "editor.formatOnSave": false,
+      "editor.formatOnPaste": false
+    },
     "[toml]": {
       "editor.formatOnSave": true,
       // Format toml files (needs toml extension https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml)
@@ -47,6 +52,8 @@
     "files.exclude": {
       "**/.venv/**": true,
       "**/venv/**": true,
+      "**/site/**": true,
+      "**/.nox/**": true,
       "**/coverage": true,
       "**/htmlcov": true,
       "**/__pycache__": true,
@@ -59,6 +66,8 @@
     "files.watcherExclude": {
       "**/.venv/**": true,
       "**/venv/**": true,
+      "**/site/**": true,
+      "**/.nox/**": true,
       "**/coverage": true,
       "**/htmlcov": true,
       "**/__pycache__": true,

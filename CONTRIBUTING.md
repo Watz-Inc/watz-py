@@ -46,7 +46,7 @@ Install the package with development requirements:
 - `pdm run nox -s qa` to run everything that runs on a git commit, plus `pyright`
 - `pdm run nox -s test` to run tests
 - `pdm run nox -s coverage` for a coverage report based on the last `test` session run
-- `pdm run nox -s docs -- serve` to build the docs and run a local copy at `http://localhost:8000`
+- `pdm run nox -s docs -- serve` to build the docs and run a local copy at `http://localhost:8080`
 
 Unit tests are located in the _tests_ directory,
 and are written using the [pytest] testing framework.

@@ -1,14 +1,14 @@
-"""`GET`: `/api/v1/ping` endpoint configuration."""
+"""`POST`: `/api/v1/ping` endpoint configuration."""
 
 import typing_extensions as tp
-from pydantic import BaseModel
 
 from ._endpoint import Endpoint
+from .req_base import ReqBase
 from .resp_base import RespBase
 
 
-class ReqPing(BaseModel):
-    """`GET`: `/api/v1/ping` request model.
+class ReqPing(ReqBase):
+    """`POST`: `/api/v1/ping` request model.
 
     No specific attributes.
     """
@@ -17,7 +17,7 @@ class ReqPing(BaseModel):
 
 
 class RespPing(RespBase):
-    """`GET`: `/api/v1/ping` response model.
+    """`POST`: `/api/v1/ping` response model.
 
     Attributes:
         status: Always `"OK"`.
@@ -28,4 +28,4 @@ class RespPing(RespBase):
     whoami: str
 
 
-end_ping = Endpoint("GET", "/ping", ReqPing, RespPing)
+end_ping = Endpoint("POST", "/ping", ReqPing, RespPing)
