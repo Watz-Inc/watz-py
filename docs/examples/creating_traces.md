@@ -129,9 +129,14 @@ client.trace_create([
         parent_uid=act_uid,
         name="hr/power",
         data={
-            "unit": "bpm",
-            "hr": [102, 110],
-            "power": [200, 210],
+            "hr": {
+                "unit": "bpm",
+                "values": [102, 110]
+            },
+            "power": {
+                "unit": "watts", 
+                "values": [200, 210],
+            },
             "timestamps": [
                 dt.datetime(2021, 1, 1), 
                 dt.datetime(2021, 1, 2), 
