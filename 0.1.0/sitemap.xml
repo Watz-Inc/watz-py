@@ -2,52 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/CODE_OF_CONDUCT/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/CONTRIBUTING/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/LICENSE/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/conversions/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/usage/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://watz-inc.github.io/watz-py/0.1.0/examples/</loc>
+         <lastmod>2023-10-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://watz-inc.github.io/watz-py/0.1.0/examples/creating_traces/</loc>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/reference/SUMMARY/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/reference/client/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/reference/helpers/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://watz-inc.github.io/watz-py/0.1.0/reference/models/</loc>
-         <lastmod>2023-10-18</lastmod>
+         <lastmod>2023-10-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
