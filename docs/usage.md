@@ -12,6 +12,7 @@ Alternatively, a [`Client`][watz.Client] can read the api key from the environme
 
 ```py title="Secret from environment variable"
 import os
+import watz
 
 os.environ["WATZ_SECRET"] = "your api key"
 client = watz.Client()
@@ -27,11 +28,13 @@ A subject is an individual whom data can be assigned to. These subjects can be i
 Subjects are created with a [`NewSubject`][watz.models.NewSubject] model, and return a [`Subject`][watz.models.Subject].
 
 ```py title="Creating subjects"
-client.subject_create(
-    [
-        watz.models.NewSubject(email="bar@bar.com"),
-        watz.models.NewSubject(email="foo@foo.com"),
-    ]
+print(
+    client.subject_create(
+        [
+            watz.models.NewSubject(email="bar@bar.com"),
+            watz.models.NewSubject(email="foo@foo.com"),
+        ]
+    )
 )
 """
 [
@@ -53,17 +56,17 @@ client.subject_create(
 
 An activity is a specific event in time for a given subject, where data can be grouped together.
 
-To create an activity, the only requirement is a `subject_uid` of a previously created subject. Currently, the `subject_uid` will always be the user's email address and can be accessed from `subject.uid` of a `Subject` model.
+To create an activity, the only requirement is a `subject_uid` of a previously created subject. Currently, the `subject_uid` will always be the user's email address and can be accessed from `subject.uid` of a [`Subject`][watz.models.Subject] model.
 
 Activities are created with a [`NewActivity`][watz.models.NewActivity] model, and return an [`Activity`][watz.models.Activity].
 
 Activities can be passed some optional parameters too:
 
-| Parameter Name | Default          | Description                                                                                               |
-| -------------- | ---------------- | --------------------------------------------------------------------------------------------------------  |
-| `label`        | `"No label"`     | This label is attached to all [`Activity`][watz.models.Activity] objects, and can help identify activities|
-| `start_time`   | `datetime.now()` | This marks the start of the specific activity                                                             |
-| `fit_files`    | `[]`             | Fit files in the form of `bytes` will be parsed and used to automatically create traces for the activity  |
+| Parameter Name | Default                   | Description                                                                                               |
+| -------------- | ------------------------- | --------------------------------------------------------------------------------------------------------  |
+| `label`        | `"No label"`              | This label is attached to all [`Activity`][watz.models.Activity] objects, and can help identify activities|
+| `start_time`   | `datetime.datetime.now()` | This marks the start of the specific activity                                                             |
+| `fit_files`    | `[]`                      | Fit files in the form of `bytes` will be parsed and used to automatically create traces for the activity  |
 
 ```py title="Creating activities"
 import os
@@ -72,16 +75,18 @@ import datetime as dt
 with open("fit_file.fit", "rb") as f:
     fit_file = f.read()
 
-client.activity_create(
-    [
-        watz.models.NewActivity(subject_uid="bar@bar.com"),
-        watz.models.NewActivity(
-            subject_uid="foo@foo.com",
-            label="foo",
-            start_time=dt.datetime(2021, 1, 1),
-            fit_files=[fit_file],
-        ),
-    ]
+print(
+    client.activity_create(
+        [
+            watz.models.NewActivity(subject_uid="bar@bar.com"),
+            watz.models.NewActivity(
+                subject_uid="foo@foo.com",
+                label="foo",
+                start_time=dt.datetime(2021, 1, 1),
+                fit_files=[fit_file],
+            ),
+        ]
+    )
 )
 """
 [
@@ -100,7 +105,7 @@ client.activity_create(
 The [`Client`][watz.Client] can be used to list existing subjects and activities in the system.
 
 ```py title="Listing subjects & activities"
-client.subject_list()
+print(client.subject_list())
 """
 [
     Subject(
@@ -149,35 +154,37 @@ class ExamplePdModel(BaseModel):
     a: int
     b: str
 
-client.trace_create(
-    [
-        watz.models.NewTrace(
-            # Assigning to the subject "bar@bar.com"
-            parent_uid="bar@bar.com",
-            name="measurements",
-            data={
-                "height": 180,
-                "weight": 80,
-            },
-        ),
-        watz.models.NewTrace(
-            # Assigning to the activity of the subject "foo@foo.com"
-            parent_uid="act_2_uid",
-            name="misc",
-            data=[
-                # See the full list of supported types on the Conversions Page
-                1,
-                "2",
-                True,
-                None,
-                ["list"],
-                {"dict": "nested"},
-                (4, 5, 6),
-                dt.datetime(2021, 1, 1),
-                ExamplePdModel(a=11, b="12"),
-            ],
-        ),
-    ]
+print(
+    client.trace_create(
+        [
+            watz.models.NewTrace(
+                # Assigning to the subject "bar@bar.com"
+                parent_uid="bar@bar.com",
+                name="measurements",
+                data={
+                    "height": 180,
+                    "weight": 80,
+                },
+            ),
+            watz.models.NewTrace(
+                # Assigning to the activity of the subject "foo@foo.com"
+                parent_uid="act_2_uid",
+                name="misc",
+                data=[
+                    # Full list of supported types on Conversions Page
+                    1,
+                    "2",
+                    True,
+                    None,
+                    ["list"],
+                    {"dict": "nested"},
+                    (4, 5, 6),
+                    dt.datetime(2021, 1, 1),
+                    ExamplePdModel(a=11, b="12"),
+                ],
+            ),
+        ]
+    )
 )
 """
 [
@@ -192,10 +199,16 @@ client.trace_create(
 
 ## Retrieving Traces
 
-Traces for a given list of parents can be pulled using [`client.trace_list()`][watz.Client.trace_list].
+Trace information for a given list of parents can be pulled using [`client.trace_list()`][watz.Client.trace_list].
+
+!!! important
+    [`client.trace_list()`][watz.Client.trace_list] excludes the data itself, [`client.trace_hydrate()`][watz.Client.trace_hydrate] is needed to retrieve the actual data.
+
 
 ```py title="Listing traces"
-client.trace_list(["bar@bar.com", "foo@foo.com", "act_2_uid"])
+print(
+    client.trace_list(["bar@bar.com", "foo@foo.com", "act_2_uid"])
+)
 """
 {
     "bar@bar.com": [
@@ -213,19 +226,36 @@ client.trace_list(["bar@bar.com", "foo@foo.com", "act_2_uid"])
 """
 ```
 
-As a separate step, desired traces can be hydrated with their data using [`client.trace_hydrate()`][watz.Client.trace_hydrate].
+[`client.trace_hydrate()`][watz.Client.trace_hydrate] can then be used to convert [`Trace`][watz.models.Trace] models to [`TraceWithData`][watz.models.TraceWithData] models.
 
-Either the full output of a trace_list can be passed, or a specific list of traces. In either case, the output structure is the same as the input, just with [`Trace`][watz.models.Trace] objects replaced with [`TraceWithData`][watz.models.TraceWithData] objects.
+[`client.trace_hydrate()`][watz.Client.trace_hydrate] can be called with an arbitrary list of traces:
+```py title="Hydrating a list of traces with data"
+traces = client.trace_list(["bar@bar.com", "foo@foo.com", "1_act_uid"])
+print(
+    client.trace_hydrate(traces["bar@bar.com"])
+)
+"""
+[
+    TraceWithData(
+        uid="123",
+        name="measurements",
+        parser_id=2,
+        data={"height": 180, "weight": 80},
+    ),
+]
+"""
+```
 
 !!! info
     [`client.trace_hydrate()`][watz.Client.trace_hydrate] under the hood uses [`client.trace_data()`][watz.Client.trace_data], which is actually returning the raw data.
 
-!!! tip
-    These endpoints are separated to minify unwanted data transfer. The request might be rejected if the size of tranfer requested is too large, which is why it can be useful to target exactly what's needed.
+Hydration can also be called on the full output of [`client.trace_list()`][watz.Client.trace_list]:
 
-```py title="Hydrating traces with data"
+```py title="Hydrating full trace_list() output with data"
 traces = client.trace_list(["bar@bar.com", "foo@foo.com", "1_act_uid"])
-client.trace_hydrate(traces)
+print(
+    client.trace_hydrate(traces)
+)
 """
 {
     "bar@bar.com": [
@@ -256,17 +286,10 @@ client.trace_hydrate(traces)
     ],
 }
 """
-
-# Passing a specific list of traces works too, outputting a list to match:
-client.traces_hydrate(traces["bar@bar.com"])
-"""
-[
-    TraceWithData(
-        uid="123",
-        name="measurements",
-        parser_id=2,
-        data={"height": 180, "weight": 80},
-    ),
-]
-"""
 ```
+
+!!! tip 
+    [`client.trace_hydrate()`][watz.Client.trace_hydrate] output matches the input. If `list[Trace]` is input, `list[TraceWithData]` is returned, if `dict[str, list[Trace]]` is passed in, `dict[str, list[TraceWithData]]` is returned.
+
+!!! tip
+    [`client.trace_list()`][watz.Client.trace_list] and [`client.trace_hydrate()`][watz.Client.trace_hydrate] are separated to minify unwanted data transfer. The request might be rejected if the size of tranfer requested is too large, which is why it can be useful to target exactly what's needed.
