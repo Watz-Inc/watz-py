@@ -13,6 +13,9 @@ theme:
     - navigation.instant.progress
     - navigation.tracking
     - navigation.tabs
+    - navigation.expand
+    - navigation.path
+    - navigation.sections
     - search.suggest
     - search.highlight
     - content.code.copy
@@ -70,6 +73,9 @@ nav:
   - Usage:
       - usage.md
       - conversions.md
+      - Examples:
+          - examples/index.md
+          - examples/creating_traces.md
   # defer to gen-files + literate-nav https://mkdocstrings.github.io/recipes/?h=recip#automatic-code-reference-pages
   - Code Reference: reference/ # Note the trailing slash is important
   - Contributing:
